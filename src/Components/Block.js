@@ -42,8 +42,10 @@ const Block = (props) => {
     let answer = getRandomInt(0, 9);
 
     while (guess !== answer) {
-      guess = getRandomInt(0, 9000000);
-      answer = getRandomInt(0, 9000000);
+      guess = getRandomInt(0, 900000);
+      answer = getRandomInt(0, 900000);
+      console.log("Jonah Guessed: " + guess);
+      console.log("The answer was: " + answer);
     }
     if (guess === answer) {
       props.onNewBlock(hash, transactions);

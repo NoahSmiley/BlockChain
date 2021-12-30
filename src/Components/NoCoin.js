@@ -57,7 +57,7 @@ const NoCoin = (props) => {
       <div className="container">
         <div className="container">
           <h1>
-            Noah<b style={{ "font-weight": "bold" }}>Coin</b>
+            Sam<b style={{ "font-weight": "bold" }}>Coin</b>
           </h1>
         </div>
         <div className="container">

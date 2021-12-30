@@ -11,7 +11,9 @@ const BlockChain = () => {
     return (Math.random() * (max - min) + min).toFixed(2); //The maximum is exclusive and the minimum is inclusive
   };
 
-  const [exchangeRate, setExchangeRate] = useState(getRandomInt(80000, 100000));
+  const [exchangeRate, setExchangeRate] = useState(
+    getRandomInt(100000, 100000000)
+  );
   const [blockChain, setBlockChain] = useState([]);
   const [balance, setBalance] = useState(getRandomInt(20000, 50000));
   const [coinBalance, setCoinBalance] = useState([0.0, parseFloat(0.0)]);
@@ -19,7 +21,7 @@ const BlockChain = () => {
   const [availBlocks, setAvailBlocks] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setExchangeRate(getRandomInt(80000, 100000));
+      setExchangeRate(getRandomInt(100000, 100000000));
     }, 30000);
 
     return () => {

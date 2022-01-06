@@ -4,19 +4,19 @@ import { useState, useEffect } from "react";
 const BlockList = (props) => {
   const [blockChain, setBlockChain] = useState(props.blocks);
   console.log(blockChain);
+
   useEffect(() => {
     setBlockChain(props.blocks);
-  }, [props]);
+  }, [props.blocks]);
 
   const blockList = blockChain.map((block, i) => {
     return (
       <Fragment>
-        <br />
         <div className="container">
-          <h1>
-            <b>BLOCKCHAIN</b>
-          </h1>
-          <div className="jumbotron">
+          <div
+            className="jumbotron"
+            style={{ backgroundColor: "#3b4049", width: "500px" }}
+          >
             <div className="container">
               <p>Block: {i}</p>
               <p>
@@ -39,6 +39,17 @@ const BlockList = (props) => {
       </Fragment>
     );
   });
-  return <Fragment>{blockList}</Fragment>;
+  return (
+    <Fragment>
+      <div className="container">
+        <br></br>
+        <h5 style={{ fontWeight: "thinner" }} className="container">
+          The <b style={{ fontWeight: "bolder" }}>BLOCK:</b>
+        </h5>
+        <br></br>
+        {blockList}
+      </div>
+    </Fragment>
+  );
 };
 export default BlockList;

@@ -4,24 +4,29 @@ import { useState, useEffect } from "react";
 import BlockList from "./BlockList";
 import NoCoin from "./NoCoin";
 
-const BlockChain = () => {
+const BlockChain = (props) => {
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return (Math.random() * (max - min) + min).toFixed(2); //The maximum is exclusive and the minimum is inclusive
   };
 
-  const [exchangeRate, setExchangeRate] = useState(
-    getRandomInt(100000, 100000000)
-  );
+  const [crypto,setCrypto]=useState(props.crypto)
+
+  console.log(crypto)
   const [blockChain, setBlockChain] = useState([]);
-  const [balance, setBalance] = useState(getRandomInt(20000, 50000));
+  const [balance, setBalance] = useState(getRandomInt(200000000, 5000000000));
   const [coinBalance, setCoinBalance] = useState([0.0, parseFloat(0.0)]);
   const [userInfo, setUserInfo] = useState([balance, coinBalance, []]);
   const [availBlocks, setAvailBlocks] = useState(0);
+
+  const [exchangeRate, setExchangeRate] = useState(
+    getRandomInt(props.crypto.lower, props.crypto.upper)
+  );
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setExchangeRate(getRandomInt(100000, 100000000));
+      setExchangeRate(getRandomInt(props.crypto.lower, props.crypto.upper));
     }, 30000);
 
     return () => {
@@ -74,6 +79,7 @@ const BlockChain = () => {
           onBalanceChange={balanceHandler}
           available={availBlocks}
           onTransaction={blockUpdateHandler}
+          cryptoInfo = {crypto}
         />
         <div className="container">
           <div className="container">

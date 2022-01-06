@@ -38,13 +38,13 @@ const Block = (props) => {
   };
   const autoSubmitHandler = (event) => {
     event.preventDefault();
-    let guess = getRandomInt(0, 9);
-    let answer = getRandomInt(0, 9);
+    let guess = getRandomInt(0, 10000);
+    let answer = getRandomInt(0, 10000);
 
     while (guess !== answer) {
-      guess = getRandomInt(0, 900000);
-      answer = getRandomInt(0, 900000);
-      console.log("Jonah Guessed: " + guess);
+      guess = getRandomInt(0, 10000);
+      answer = getRandomInt(0, 10000);
+      console.log("reLo Guessed: " + guess);
       console.log("The answer was: " + answer);
     }
     if (guess === answer) {
@@ -98,6 +98,7 @@ const Block = (props) => {
         </Fragment>
       </div>
     </Fragment>
+    
   );
 };
 export default Block;

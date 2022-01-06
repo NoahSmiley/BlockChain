@@ -2,10 +2,10 @@ import { Fragment } from "react/cjs/react.development";
 import { useState, useEffect } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import "./jumbo.css";
+import NoCoinICON from "./nocoin.png";
 
 const NoCoin = (props) => {
   const [balance, setBalance] = useState(props.user[0]);
-
   const [coinBalance, setCoinBalance] = useState([
     props.user[1][0],
     props.user[1][1],
@@ -15,7 +15,7 @@ const NoCoin = (props) => {
   useEffect(() => {
     setCoinBalance([
       (Number(coinBalance[1]) * props.exchange).toFixed(2),
-      coinBalance[1],
+      (coinBalance[1]),
     ]);
   }, [props.exchange]);
 
@@ -49,6 +49,26 @@ const NoCoin = (props) => {
       alert("No Available Blocks");
     }
   };
+  const sellHandler = (event) => {
+    event.preventDefault();
+    if((coinBalance[0] - Number(amount)>0) * props.exchange && Number(coinBalance[1]) + Number(amount)>0){
+    let total = (Number(balance) + Number(amount) * props.exchange).toFixed(2);
+
+    console.log("AMOUNT IS"+Number(amount));
+    setBalance(total);
+    setCoinBalance([
+      Number(coinBalance[0]) - Number(amount)* props.exchange,
+      Number(coinBalance[1]) - Number(amount)
+    ]);
+    props.onBalanceChange(total, amount);
+    console.log(total)
+    console.log(amount)
+
+  }else{
+    alert("Insufficient Coins!")
+  }
+    setAmount("");
+  };
 
   return (
     <Fragment>
@@ -57,11 +77,16 @@ const NoCoin = (props) => {
       <div className="container">
         <div className="container">
           <h1>
-            No<b style={{ "font-weight": "bold" }}>Coin</b>
+            {props.cryptoInfo.cryptoName}
+            <b style={{ fontWeight: "bolder" }}></b>
           </h1>
+          <p>{props.cryptoInfo.motto}</p>
         </div>
         <div className="container">
-          <div className="jumbotron" style={{ "padding-top": "-50px" }}>
+          <div
+            className="jumbotron"
+            style={{ paddingTop: "-50px", backgroundColor: "#3b4049" }}
+          >
             <h4>Price: ${props.exchange}</h4>
             <Form onSubmit={submitHandler}>
               <Form.Group className="mb-3">
@@ -72,6 +97,7 @@ const NoCoin = (props) => {
                   type="decimal"
                   onChange={amountHandler}
                   placeholder="0.0007"
+                  value={amount}
                 />
               </Form.Group>
               <p>
@@ -96,9 +122,43 @@ const NoCoin = (props) => {
               </Button>
             </Form>
             <br />
+            <Form onSubmit={sellHandler}>
+              <Form.Group className="mb-3">
+                <h4>Sell Coin:</h4>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter Amount (0.0002)"
+                  type="decimal"
+                  onChange={amountHandler}
+                  placeholder="0.0007"
+                  value={amount}
+                />
+              </Form.Group>
+              <p>
+                {(() => {
+                  if (amount !== "")
+                    return (
+                      <Form.Text className="text-muted">
+                        Current Exchange: $
+                        {Number(amount * props.exchange).toFixed(2)}
+                      </Form.Text>
+                    );
+                  else
+                    return (
+                      <Form.Text className="text-muted">
+                        Enter an Amount
+                      </Form.Text>
+                    );
+                })()}
+              </p>
+              <Button variant="primary" type="submit">
+                Sell Coin
+              </Button>
+            </Form>
+            <br></br>
             <h5>Balance: ${balance} </h5>
             <h5>Coin Balance: ${Number(coinBalance[0]).toFixed(2)}</h5>
-            <h5>Total Coins: {Number(coinBalance[1]).toFixed(5)}</h5>
+            <h5>Total Coins: {Number(coinBalance[1]).toFixed(10)}</h5>
           </div>
         </div>
       </div>
